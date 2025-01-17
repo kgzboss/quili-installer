@@ -93,7 +93,7 @@ Restart=always
 RestartSec=5s
 WorkingDirectory=/root/ceremonyclient/node
 Environment=GOEXPERIMENT=arenas
-ExecStart=/root/ceremonyclient/node/node-2.0.6.1-linux-amd64
+ExecStart=/root/ceremonyclient/node/release_autorun.sh
 
 [Install]
 WantedBy=multi-user.target
