@@ -121,11 +121,13 @@ else
     echo "Warning: Config file not found at $CONFIG_FILE"
 fi
 
-echo "Installation done"
+echo "First phase of Installation done!"
 
-echo "Will stop client and add store file.."
+echo -n "Stopping service... "
+sudo service ceremonyclient stop >/dev/null 2>&1 & 
+while kill -0 $! 2>/dev/null; do echo -ne "\r[ / ] Stopping service... " && sleep 0.2 && echo -ne "\r[ - ] Stopping service... " && sleep 0.2 && echo -ne "\r[ \\ ] Stopping service... " && sleep 0.2 && echo -ne "\r[ | ] Stopping service... " && sleep 0.2; done; echo -e "\n"
 
-# Stop the service and check if it succeeded
+# Original error check
 if ! sudo service ceremonyclient stop; then
     echo "Failed to stop ceremonyclient service"
     exit 1
