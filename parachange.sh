@@ -1,6 +1,6 @@
 service para stop
 sudo tee /root/ceremonyclient/node/para.sh > /dev/null << 'EOF'
-#!/bin/bash
+#!/usr/bin/env bash
 DIR_PATH=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
 os=$1
