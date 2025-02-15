@@ -149,7 +149,7 @@ fi
 
 # Download frame.zip with error checking
 echo "Downloading frame.zip..."
-if ! curl -L -o frame.zip "https://www.dropbox.com/scl/fi/vem2b4y4aarczss3682lx/mainnet_store_frame_119288.zip?rlkey=llhf5ewjgyqmoifbu07t7putw&st=etzoi4gs&dl=1"; then
+if ! curl -L -o frame.zip "https://www.dropbox.com/scl/fi/rrmr9zi9qwx0vy69vq7ak/mainnet_store_frame_140893.tar.xz?rlkey=849ovy6uck7ohcrc2e6tuh3cy&st=bndhgr9d&dl=1"; then
     echo "Failed to download frame.zip"
     exit 1
 fi
