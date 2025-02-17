@@ -149,7 +149,7 @@ fi
 
 # Download frame.tar.xz with error checking
 echo "Downloading frame.tar.xz..."
-if ! curl -L -o frame.tar.xz "https://www.dropbox.com/scl/fi/rrmr9zi9qwx0vy69vq7ak/mainnet_store_frame_140893.tar.xz?rlkey=849ovy6uck7ohcrc2e6tuh3cy&st=bndhgr9d&dl=1"; then
+if ! curl -L -o frame.tar.xz "https://www.dropbox.com/scl/fi/rrmr9zi9qwx0vy69vq7ak/mainnet_store_frame_140893.tar.xz?rlkey=849ovy6uck7ohcrc2e6tuh3cy&e=2&st=bndhgr9d&dl=1"; then
     echo "Failed to download frame.tar.xz"
     exit 1
 fi
