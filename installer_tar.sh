@@ -149,17 +149,42 @@ fi
 
 # Download frame.tar.xz with error checking
 echo "Downloading frame.tar.xz..."
-if ! curl -L -o frame.tar.xz "https://www.dropbox.com/scl/fi/rrmr9zi9qwx0vy69vq7ak/mainnet_store_frame_140893.tar.xz?rlkey=849ovy6uck7ohcrc2e6tuh3cy&e=2&st=bndhgr9d&dl=1"; then
+if ! curl -L -o frame.tar.xz "https://www.dropbox.com/scl/fi/rrmr9zi9qwx0vy69vq7ak/mainnet_store_frame_140893.tar.xz?rlkey=849ovy6uck7ohcrc2e6tuh3cy&st=bndhgr9d&dl=1"; then
     echo "Failed to download frame.tar.xz"
     exit 1
 fi
 
-# Extract tar.xz with error checking
+# Check for pv installation
+if ! command -v pv >/dev/null 2>&1; then
+    echo "Installing pv for progress monitoring..."
+    if ! sudo apt-get install -y pv; then
+        echo "Failed to install pv, falling back to regular extraction"
+        # Fallback to regular extraction with verbose output
+        if ! tar -xvf frame.tar.xz; then
+            echo "Failed to extract frame.tar.xz"
+            rm -f frame.tar.xz # Clean up the tar file on failure
+            exit 1
+        fi
+    fi
+fi
+
+# Extract with progress bar if pv is available
 echo "Extracting frame.tar.xz..."
-if ! tar -xf frame.tar.xz; then
-    echo "Failed to extract frame.tar.xz"
-    rm -f frame.tar.xz # Clean up the tar file on failure
-    exit 1
+if command -v pv >/dev/null 2>&1; then
+    # Get the size of the compressed file
+    size=$(stat -f%z frame.tar.xz 2>/dev/null || stat -c%s frame.tar.xz)
+    pv -s $size frame.tar.xz | tar -xJ || {
+        echo "Failed to extract frame.tar.xz"
+        rm -f frame.tar.xz
+        exit 1
+    }
+else
+    # Fallback to verbose output without progress bar
+    if ! tar -xvf frame.tar.xz; then
+        echo "Failed to extract frame.tar.xz"
+        rm -f frame.tar.xz
+        exit 1
+    fi
 fi
 
 # Remove the tar file
